@@ -15,23 +15,31 @@ function Post(props) {
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState("")
     const [commentUpdated, setCommentUpdated] = useState(false);
-
+    const [postUser, setPostUser] = useState("")
+    const [currentUser, setCurrentUser] = useState(null);
 
     const createComment = () => {
-        api.createComment(state.id, post.id, comment).then((insertId) => {
+        api.createComment(currentUser.id, post.id, comment).then((insertId) => {
             setCommentUpdated(true)
             setComment("");
         })
     }
 
     useEffect(() => {
-        console.log("STATE", state);
-        if (!state) {
+        api.getCurrentUser().then((user) => {
+            console.log(user);
+            setCurrentUser(user)
+        }).catch(err => {
+            console.log(err);
             navigate("/");
-        }
+        })
         api.getPostComments(post.id).then((commentList) => {
             console.log(commentList)
             setComments(commentList);
+        })
+        api.getPostById(post.id).then((postInfo) => {
+            console.log(postInfo)
+            setPostUser(postInfo.username)
         })
     }, [commentUpdated])
 
@@ -40,7 +48,7 @@ function Post(props) {
             <div className="p-8">
                 <div className="flex items-center mb-4">
                     <div className="text-sm">
-                        <p className="text-gray-900 font-semibold">{state.username}</p>
+                        <p className="text-gray-900 font-semibold">{postUser}</p>
                     </div>
                 </div>
                 <p className="mt-2 text-gray-500">{post.description}</p>

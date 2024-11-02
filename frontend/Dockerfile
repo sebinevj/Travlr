@@ -1,0 +1,17 @@
+FROM node:lts
+# Set working directory
+WORKDIR /app
+
+# install node modules
+COPY ./package*.json .
+COPY ./index.html .
+COPY ./vite.config.js .
+COPY ./tailwind.config.js .
+RUN npm install
+
+# Copy all files from current directory to working dir in image
+COPY . .
+
+ENV PORT 80
+
+CMD ["npm", "run", "dev"]

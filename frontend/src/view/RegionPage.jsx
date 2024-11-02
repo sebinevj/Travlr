@@ -18,12 +18,16 @@ function RegionPage() {
     const [postUpdated, setPostsUpdated] = useState(false);
     const [addPostOpen, setAddPostOpen] = useState(false);
     const [comment, setComment] = useState("")
+    const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
-        if (state === null) {
-            console.log("hello !!")
-            navigate("/")
-        }
+        api.getCurrentUser().then((user) => {
+            console.log(user);
+            setCurrentUser(user)
+        }).catch(err => {
+            console.log(err);
+            navigate("/");
+        })
         api.getRegionPosts(state.regionId).then((postList) => {
             console.log(postList)
             setPosts(postList);
@@ -31,7 +35,7 @@ function RegionPage() {
     }, [postUpdated])
 
     const createPost = () => {
-        api.createPost(state.id, state.regionId, comment).then((insertId) => {
+        api.createPost(currentUser.id, state.regionId, comment).then((insertId) => {
             setPostsUpdated(true);
             setComment("");
         })
@@ -39,7 +43,7 @@ function RegionPage() {
 
     return (
         <div>
-            <IconButton className=" flex items-center bg-white text-gray-500 focus:outline-none hover:text-blue-500" onClick={() => navigate("/home", { state: state})}>
+            <IconButton className=" flex items-center bg-white text-gray-500 focus:outline-none hover:text-blue-500" onClick={() => navigate("/home")}>
                 <Home fontSize="large" />
             </IconButton>
             <div className="flex flex-col justify-center items-center">

@@ -2,14 +2,16 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const { getDatabaseConnection } = require('./controllers/DBconnection');
+const cookieparser = require("cookie-parser");
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 80;
 const APIRouter = require('./routers/routes');
 
 app.use(cors());
+app.use(cookieparser());
 app.use(express.json());
-app.use('/api', APIRouter);
+app.use(APIRouter);
 
 let connection = getDatabaseConnection();
 

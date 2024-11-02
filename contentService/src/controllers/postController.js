@@ -2,8 +2,9 @@ const db = require('./DBconnection');
 
 // Get user by id 
 function getPostById(id) {
-    return db.query('SELECT * FROM post where id=?', id)
+    return db.query('SELECT user.username, post.description FROM post JOIN user on user.id=post.user_id where post.id=?', id)
         .then(({ results }) => {
+            console.log(results);
             return results[0];
         });
 }

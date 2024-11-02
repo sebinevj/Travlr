@@ -5,11 +5,11 @@ let connection;
 exports.getDatabaseConnection = () => {
     if(!connection) {
         connection = mysql.createPool({
-            host: 'localhost',
-            user: 'root',
-            password: 'Seb8ine8$',
-            port: 3306,
-            database: 'userServ',
+          host: process.env.DB_HOST,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASS,
+          port: process.env.DB_PORT,
+          database: process.env.DB_NAME,
         })
     }
     console.log("got connection")

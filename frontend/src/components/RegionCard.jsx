@@ -6,15 +6,12 @@ import { useNavigate } from "react-router-dom";
 function RegionCard(props) {
 
   const { region, user } = props;
-  console.log(region);
-  console.log(user);
   const navigate = useNavigate();
 
 
   function handleClick() {
     let name = (region.name).replaceAll(" ", "-");
-    console.log(name);
-    navigate(`/regions/${name}`, { state: { regionName: region.name, regionId: region.id, id: user.id, username: user.username, email: user.email } });
+    navigate(`/regions/${name}`, { state: { regionName: region.name, regionId: region.id}});
   }
 
   return (

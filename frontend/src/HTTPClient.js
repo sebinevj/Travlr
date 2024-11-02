@@ -10,6 +10,7 @@ const handleError = (res) => {
   export default {
     get: (url) => {
       return fetch(url, {
+        credentials: 'include',
         headers: {
         }
       }).then(handleError).then(res => {
@@ -22,6 +23,7 @@ const handleError = (res) => {
       return fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         }
@@ -33,6 +35,7 @@ const handleError = (res) => {
     put: (url, data) => {
       return fetch(url, {
         method: 'PUT',
+        credentials: 'include',
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
@@ -46,6 +49,7 @@ const handleError = (res) => {
     delete: (url) => {
       return fetch(url, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {}
       }).then(handleError).then(res => {
         return res.json();

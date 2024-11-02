@@ -5,13 +5,15 @@ function getUserByEmail(email) {
     return db.query('SELECT * FROM user where email=?', email)
         .then(({ results }) => {
             if (results[0]) {
+                console.log(results[0])
                 return results[0];
             }
             else {
+                console.log("No results");
                 return null
             }
         }).catch((err) => {
-            // console.error('Error getting user by id:', err);
+            console.log('Error getting user by id:', err);
             throw err;});
 }
 
@@ -23,8 +25,8 @@ function getUserById(id) {
         });
 }
 
-function createUser(email, username) {
-    return db.query('INSERT INTO user (email, username) VALUES (?, ?)', [email, username])
+function createUser(email, username, password) {
+    return db.query('INSERT INTO user (email, username, password) VALUES (?, ?, ?)', [email, username, password])
         .then(({ results }) => {
             console.log("Results", results)
             return results.insertId;

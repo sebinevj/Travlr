@@ -1,35 +1,49 @@
 import HTTPClient from "./HTTPClient.js";
 
-const createUser = (email, username) => {
+const createUser = (email, username, password) => {
   const data = {
     email: email,
     username: username, 
+    password, password
   }
-  return HTTPClient.post(`http://localhost:3000/api/users`, data);
+  return HTTPClient.post(`/api/auth/users`, data);
 };
 
 const getUserByEmail = (email) => {
-    return HTTPClient.get(`http://localhost:3000/api/users/email/${email}`);
+    return HTTPClient.get(`api/auth/users/email/${email}`);
   };
 
 const getUserById = (id) => {
-  return HTTPClient.get(`http://localhost:3000/api/users/id/${id}`);
+  return HTTPClient.get(`api/auth/users/id/${id}`);
 };
 
+const login = (email, password) => {
+  const data = {
+    email: email,
+    password, password
+  }
+  return HTTPClient.post(`/api/auth/users/login`, data);
+}
+
+const getCurrentUser = () => {
+  return HTTPClient.get(`/api/auth/users/current`);
+};
+
+
 const getRegions= () => {
-    return HTTPClient.get(`http://localhost:3000/api/regions`);
+    return HTTPClient.get(`/api/auth/regions`);
 };
 
 // const getFollowedRegions = (id) => {
-//   return HTTPClient.get(`http://localhost:3000/api/follows`);
+//   return HTTPClient.get(`/api/auth/follows/${id}`);
 // }
 
 const getRegionPosts = (id) => {
-  return HTTPClient.get(`http://localhost:3000/api/regions/${id}/posts`);
+  return HTTPClient.get(`/api/auth/regions/${id}/posts`);
 }
 
 const getPostComments = (id) => {
-  return HTTPClient.get(`http://localhost:3001/api/posts/${id}/comments`);
+  return HTTPClient.get(`/api/content/posts/${id}/comments`);
 }
 
 const createComment = (user_id, post_id, description) => {
@@ -38,7 +52,7 @@ const createComment = (user_id, post_id, description) => {
     post_id: post_id, 
     description: description
   }
-  return HTTPClient.post(`http://localhost:3001/api/comments`, data);
+  return HTTPClient.post(`/api/content/comments`, data);
 }
 
 const createPost = (user_id, region_id, description) => {
@@ -47,7 +61,11 @@ const createPost = (user_id, region_id, description) => {
     region_id: region_id, 
     description: description
   }
-  return HTTPClient.post(`http://localhost:3001/api/posts`, data);
+  return HTTPClient.post(`/api/content/posts`, data);
+}
+ 
+const getPostById = (post_id) => {
+  return HTTPClient.get(`/api/content/posts/${post_id}`);
 }
 
 
@@ -55,9 +73,12 @@ export default {
   createUser,
   getUserByEmail,
   getUserById,
+  getCurrentUser, 
+  login,
   getRegions,
   getRegionPosts,
   getPostComments,
   createComment,
-  createPost
+  createPost,
+  getPostById
 };
